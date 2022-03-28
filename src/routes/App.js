@@ -42,7 +42,7 @@ function App() {
       <Nav />
       <Routes>
       <Route path="/login" element={<Login isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
-      <Route path="/signUp" element={<Signup />}/>
+      <Route path="/signUp" element={<Signup  setIsAuth={setIsAuth} />}/>
       <Route element={ <PrivateRoutes isAuth={isAuth} />}>
         <Route path="/" element={ <Home />}/>
         <Route path="/chat" element={ <Chat />}/>

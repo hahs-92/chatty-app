@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 //helpers
 import { signup } from '../helpers/auth'
 
-export const Signup = ({setIsAuth}) => {
+export const Signup = ({isAuth, setIsAuth}) => {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
   const [ error, setError ] = useState(null)
 
+  const navigate = useNavigate()
 
   const handleOnSubmit = async(e) => {
     e.preventDefault()
@@ -16,6 +17,9 @@ export const Signup = ({setIsAuth}) => {
     try {
       const userCredential = await signup(email,password)
       console.log(userCredential.user)
+      //
+      setIsAuth(true)
+      navigate("/")
     } catch (error) {
       setError(error.message)
     }

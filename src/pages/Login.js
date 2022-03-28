@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { GoogleAuthProvider } from  'firebase/auth'
+import { GoogleAuthProvider, GithubAuthProvider } from  'firebase/auth'
 //helpers
-import { signin, signInWithGoogle } from '../helpers/auth'
+import { signin, signInWithGoogle, signInWithGitHub } from '../helpers/auth'
 
 export const Login = ({isAuth, setIsAuth}) => {
   const [ email, setEmail ] = useState("")
@@ -41,6 +41,21 @@ export const Login = ({isAuth, setIsAuth}) => {
           // const email = error.email;
           // // The AuthCredential type that was used.
           // const credential = GoogleAuthProvider.credentialFromError(error);
+          setError(error.message)
+    }
+  }
+
+  const gitHubSignIn = async() => {
+    try {
+      const result = await signInWithGitHub()
+      const credential = GithubAuthProvider.credentialFromResult(result)
+      //const token = credential.accessToken
+      console.log(result.user)
+
+      //lo redirigido maunalmete
+      setIsAuth(true)
+
+    } catch (error) {
           setError(error.message)
     }
   }
@@ -85,6 +100,9 @@ export const Login = ({isAuth, setIsAuth}) => {
           <p>Or</p>
           <button onClick={googleSignIn} type="button">
             Sign in with Google
+          </button>
+          <button onClick={gitHubSignIn} type="button">
+            Sign in with GitHub
           </button>
         </div>
 
