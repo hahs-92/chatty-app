@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 //helpers
 import { signin } from '../helpers/auth'
 
-export const Login = () => {
+export const Login = ({isAuth, setIsAuth}) => {
   const [ info, setInfo ] = useState({ email: "", password:""})
   const [ error, setError ] = useState(null)
+  const navigate = useNavigate()
 
   const handleOnChange = (e) => {
     setInfo({
@@ -19,10 +20,15 @@ export const Login = () => {
 
     try {
       await signin(info.email, info.password)
+      //usar setIsAuth
     } catch (error) {
       setError(error.message)
     }
   }
+
+  useEffect(() => {
+    if(isAuth) navigate("/")
+  },[isAuth, setIsAuth])
 
   return (
     <section>
