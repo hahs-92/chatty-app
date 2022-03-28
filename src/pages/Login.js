@@ -17,7 +17,7 @@ export const Login = ({isAuth, setIsAuth}) => {
     try {
       const userCredential =  await signin(email, password)
       console.log(userCredential.user)
-      setIsAuth(true)
+      //setIsAuth(true)
 
     } catch (error) {
       setError(error.message)

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { GoogleAuthProvider } from  'firebase/auth'
 //helpers
-import { signup, signInWithGoogle} from '../helpers/auth'
+import { signup, signInWithGoogle, provider} from '../helpers/auth'
 
-export const Signup = () => {
+export const Signup = ({setIsAuth}) => {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
   const [ error, setError ] = useState(null)
@@ -24,9 +25,23 @@ export const Signup = () => {
 
   const googleSignIn = async() => {
     try {
-      await signInWithGoogle()
+      const result = await signInWithGoogle()
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      const token = credential.accessToken
+      console.log(result.user)
+
+      //lo redirigido maunalmete
+      setIsAuth(true)
+
     } catch (error) {
-      setError(error.message)
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          setError(error.message)
     }
   }
 
@@ -58,10 +73,10 @@ export const Signup = () => {
           { error && <p>error</p> }
           <input type="submit" value="Sign Up" />
 
-          {/* <p>Or</p>
+          <p>Or</p>
           <button onClick={googleSignIn} type="button">
             Sign up with Google
-          </button> */}
+          </button>
         </div>
         <hr />
         <p>Already have an account?
