@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { GoogleAuthProvider } from  'firebase/auth'
 //helpers
-import { signin } from '../helpers/auth'
+import { signin, signInWithGoogle } from '../helpers/auth'
 
 export const Login = ({isAuth, setIsAuth}) => {
   const [ email, setEmail ] = useState("")
@@ -17,10 +18,30 @@ export const Login = ({isAuth, setIsAuth}) => {
     try {
       const userCredential =  await signin(email, password)
       console.log(userCredential.user)
-      //setIsAuth(true)
-
     } catch (error) {
       setError(error.message)
+    }
+  }
+
+  const googleSignIn = async() => {
+    try {
+      const result = await signInWithGoogle()
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      //const token = credential.accessToken
+      console.log(result.user)
+
+      //lo redirigido maunalmete
+      setIsAuth(true)
+
+    } catch (error) {
+          // Handle Errors here.
+          // const errorCode = error.code;
+          // const errorMessage = error.message;
+          // // The email of the user's account used.
+          // const email = error.email;
+          // // The AuthCredential type that was used.
+          // const credential = GoogleAuthProvider.credentialFromError(error);
+          setError(error.message)
     }
   }
 
@@ -60,6 +81,11 @@ export const Login = ({isAuth, setIsAuth}) => {
         <div>
           {error && <p>{error}</p>}
           <input type="submit" value="Sing In"/>
+
+          <p>Or</p>
+          <button onClick={googleSignIn} type="button">
+            Sign in with Google
+          </button>
         </div>
 
         <hr />
