@@ -4,21 +4,19 @@ import { Link } from 'react-router-dom'
 import { signup, signInWithGoogle} from '../helpers/auth'
 
 export const Signup = () => {
-  const [ info, setInfo ] = useState({ email: "", password:""})
+  const [ email, setEmail ] = useState("")
+  const [ password, setPassword ] = useState("")
   const [ error, setError ] = useState(null)
+  const [ user, setUser ] = useState()
 
-  const handleOnChange = (e) => {
-    setInfo({
-      [e.target.name]: e.target.value
-    })
-  }
 
   const handleOnSubmit = async(e) => {
     e.preventDefault()
     setError(null)
 
     try {
-      await signup(info.email, info.password)
+      const userCredential = await signup(email,password)
+      console.log(userCredential.user)
     } catch (error) {
       setError(error.message)
     }
@@ -44,15 +42,15 @@ export const Signup = () => {
             type="email"
             placeholder='Email'
             name='email'
-            value={info.email}
-            onChange={handleOnChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder='Password'
             name='password'
-            value={info.password}
-            onChange={handleOnChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -60,14 +58,14 @@ export const Signup = () => {
           { error && <p>error</p> }
           <input type="submit" value="Sign Up" />
 
-          <p>Or</p>
+          {/* <p>Or</p>
           <button onClick={googleSignIn} type="button">
             Sign up with Google
-          </button>
+          </button> */}
         </div>
         <hr />
         <p>Already have an account?
-          <Link to="/login">Login</Link>
+          <Link to="/logIn">Login</Link>
         </p>
       </form>
     </section>

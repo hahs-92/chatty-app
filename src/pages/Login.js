@@ -4,23 +4,21 @@ import { Link, useNavigate } from 'react-router-dom'
 import { signin } from '../helpers/auth'
 
 export const Login = ({isAuth, setIsAuth}) => {
-  const [ info, setInfo ] = useState({ email: "", password:""})
+  const [ email, setEmail ] = useState("")
+  const [ password, setPassword ] = useState("")
   const [ error, setError ] = useState(null)
   const navigate = useNavigate()
 
-  const handleOnChange = (e) => {
-    setInfo({
-      [e.target.name]: e.target.value
-    })
-  }
 
   const handleOnSubmit = async(e) => {
     e.preventDefault()
     setError(null)
 
     try {
-      await signin(info.email, info.password)
-      //usar setIsAuth
+      const userCredential =  await signin(email, password)
+      console.log(userCredential.user)
+      setIsAuth(true)
+
     } catch (error) {
       setError(error.message)
     }
@@ -28,7 +26,7 @@ export const Login = ({isAuth, setIsAuth}) => {
 
   useEffect(() => {
     if(isAuth) navigate("/")
-  },[isAuth, setIsAuth])
+  },[isAuth])
 
   return (
     <section>
@@ -44,8 +42,8 @@ export const Login = ({isAuth, setIsAuth}) => {
             placeholder="Email"
             name="email"
             type="email"
-            onChange={handleOnChange}
-            value={info.email}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
         </div>
 
@@ -53,8 +51,8 @@ export const Login = ({isAuth, setIsAuth}) => {
           <input
             placeholder="Password"
             name="password"
-            onChange={handleOnChange}
-            value={info.password}
+            onChange={ (e) => setPassword(e.target.value)}
+            value={password}
             type="password"
           />
         </div>
@@ -67,7 +65,7 @@ export const Login = ({isAuth, setIsAuth}) => {
         <hr />
 
         <p>
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Don't have an account? <Link to="/signUp">Sign up</Link>
         </p>
       </form>
     </section>

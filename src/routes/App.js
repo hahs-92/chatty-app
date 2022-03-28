@@ -6,6 +6,7 @@ import {
   Route,
   Navigate
 } from 'react-router-dom'
+import { onAuthStateChanged} from 'firebase/auth'
 //firebase config
 import { auth } from '../services/firebase'
 //styles
@@ -18,6 +19,7 @@ import { Signup } from '../pages/Signup'
 
 //components
 import { PrivateRoutes } from '../components/PrivateRoutes'
+import { Nav } from '../components/Nav'
 
 
 function App() {
@@ -25,24 +27,24 @@ function App() {
 
 
   // useEffect(() => {
-  //   auth().onAuthStateChanged((user) => {
+  //   onAuthStateChanged(auth,(user) => {
   //     if (user) {
   //       setIsAuth(true)
   //     } else {
   //       setIsAuth(false)
   //     }
   //   })
-  // },[])
+  // },[isAuth])
 
   return (
     <BrowserRouter>
+      <Nav />
       <Routes>
-      <Route path="/signin" element={<Login isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
-      <Route path="/signup" element={<Signup />}/>
+      <Route path="/login" element={<Login isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
+      <Route path="/signUp" element={<Signup />}/>
       <Route element={ <PrivateRoutes isAuth={isAuth} />}>
         <Route path="/" element={ <Home />}/>
         <Route path="/chat" element={ <Chat />}/>
-        <Route path="/" element={ <Home />}/>
       </Route>
       </Routes>
     </BrowserRouter>
