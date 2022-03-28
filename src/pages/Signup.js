@@ -20,7 +20,7 @@ export const Signup = () => {
     try {
       await signup(info.email, info.password)
     } catch (error) {
-      setError(error)
+      setError(error.message)
     }
   }
 
