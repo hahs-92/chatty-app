@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ref, onValue } from 'firebase/database'
+import { ref, onValue, set } from 'firebase/database'
 //services firebase
 import {  auth, db } from '../services/firebase'
 
@@ -18,7 +18,7 @@ export const Chat = () => {
       const startCountRef = ref(db, 'chats')
       onValue(startCountRef, (snapshot) => {
         const data = snapshot.val()
-        console.log("data:", data)
+        setChats(data)
       })
 
     } catch(e) {
@@ -27,24 +27,60 @@ export const Chat = () => {
     }
   }
 
+  const handleOnChange = (e) => {
+    setContent(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setWriteError(null)
+
+    try {
+      set(ref(db, 'chats/' + Date.now()), {
+        content: content,
+        timestamp: Date.now(),
+        uid: user.uid
+      })
+
+      setContent("")
+    } catch (e) {
+      setWriteError(e.message)
+    }
+  }
+
   useEffect(() => {
     getChats()
   },[])
 
+  console.log("chats: ", Object.values(chats))
+
   return (
     <main>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name='content'
+          value={content}
+          onChange={handleOnChange}
+        />
+        {
+          writeError && <span>{writeError}</span>
+        }
+        <input type="submit" value="Send" />
+      </form>
+
+      <section>
+        Login in as: <strong>{user.email}</strong>
+      </section>
+
       <section>
         {
-          chats && chats.map(chat => (
+          chats && Object.values(chats).map(chat => (
             <p key={chat.timestamp}>
               { chat.content }
             </p>
           ))
         }
-      </section>
-
-      <section>
-        Login in as: <strong>{user.email}</strong>
       </section>
     </main>
   )
