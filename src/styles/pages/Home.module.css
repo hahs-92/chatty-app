@@ -1,0 +1,18 @@
+.Home {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 9rem);
+}
+
+.Image {
+    width: 100%;
+    height: inherit;
+}
+
+.Image img {
+    width: 100%;
+    height: calc(100vh - 9rem);
+    max-height: min-content;
+    object-fit: cover;
+}
+
