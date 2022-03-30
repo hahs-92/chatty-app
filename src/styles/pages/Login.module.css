@@ -1,0 +1,86 @@
+.Login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 12rem);
+}
+
+.Login_Wrapper {
+    padding: 2rem 1.2rem;
+    width: 100%;
+    max-width: 35rem;
+    border: 1px solid rgb(207, 204, 204);
+    box-shadow: var(--shadow1);
+}
+
+.Form {
+    padding: 0 2rem;
+}
+
+
+.Form input{
+    margin:1rem 0;
+    padding: 0 .5rem;
+    width: 100%;
+    height: 4rem;
+    border-radius: .5rem;
+    border: .8px solid var(--secundary-color);
+}
+
+.Form_Button {
+    background-color: var(--secundary-color);
+    font-size: 1.8rem;
+    color: var(--bg-color);
+}
+
+.Form_Title {
+    display: flex;
+    justify-content: center;
+    height: 6rem;
+}
+
+.Form_Title h2 {
+    font-weight: 300;
+}
+
+.Form_Options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem 0
+}
+
+.Form_Options span {
+    width: 2rem;
+}
+
+.Form_Options button {
+    padding: 0 .5rem;
+    width: 100%;
+    height: 4rem;
+    border-radius: .5rem;
+    border: .8px solid var(--secundary-color);
+    cursor: pointer;
+}
+
+.Form_Options .Google {
+    background-color: transparent;
+    border: 1px solid var(--complementary-color);
+}
+
+.Form_Options .GitHub {
+    background-color: #333436;
+    border: 1px solid #333436;
+    color: var(--bg-color);
+}
+
+.Login_Wrapper hr {
+    margin: 1.5rem 0;
+}
+
+.SignupOption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

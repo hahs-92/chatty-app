@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { GoogleAuthProvider, GithubAuthProvider } from  'firebase/auth'
 //helpers
 import { signin, signInWithGoogle, signInWithGitHub } from '../helpers/auth'
+//styles
+import style from '../styles/pages/Login.module.css'
 
 export const Login = ({isAuth, setIsAuth}) => {
   const [ email, setEmail ] = useState("")
@@ -64,54 +66,47 @@ export const Login = ({isAuth, setIsAuth}) => {
   },[isAuth])
 
   return (
-    <section>
-      <form autoComplete='off' onSubmit={handleOnSubmit}>
-        <h1>
-          Login to
-          <Link to="/">Chatty</Link>
-        </h1>
-        <p>Fill in the form below to login to your account.</p>
+    <section className={ style.Login }>
+      <div className={ style.Login_Wrapper }>
+        <form className={ style.Form } autoComplete='off' onSubmit={handleOnSubmit}>
+          <section className={ style.Form_Title }>
+            <h2>Chatty</h2>
+          </section>
+            <input
+              placeholder="Email"
+              name="email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
 
-        <div>
-          <input
-            placeholder="Email"
-            name="email"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </div>
+            <input
+              placeholder="Password"
+              name="password"
+              onChange={ (e) => setPassword(e.target.value)}
+              value={password}
+              type="password"
+            />
 
-        <div>
-          <input
-            placeholder="Password"
-            name="password"
-            onChange={ (e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-          />
-        </div>
+            {error && <p>{error}</p>}
+            <input className={ style.Form_Button } type="submit" value="Sing In"/>
+            { warn && <span>{warn}</span>}
 
-        <div>
-          {error && <p>{error}</p>}
-          <input type="submit" value="Sing In"/>
-          { warn && <span>{warn}</span>}
-
-          <p>Or</p>
-          <button onClick={googleSignIn} type="button">
-            Sign in with Google
-          </button>
-          <button onClick={gitHubSignIn} type="button">
-            Sign in with GitHub
-          </button>
-        </div>
-
+            <section className={ style.Form_Options }>
+              <span>Or</span>
+                  <button className={ style.Google } onClick={googleSignIn} type="button">
+                    Sign in with Google
+                  </button>
+                  <button className={ style.GitHub } onClick={gitHubSignIn} type="button">
+                    Sign in with GitHub
+                  </button>
+            </section>
+        </form>
         <hr />
-
-        <p>
+        <p className={ style.SignupOption }>
           Don't have an account? <Link to="/signUp">Sign up</Link>
         </p>
-      </form>
+      </div>
     </section>
   )
 }
