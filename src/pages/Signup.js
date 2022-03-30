@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { GoogleAuthProvider, GithubAuthProvider } from  'firebase/auth'
 //helpers
@@ -62,6 +62,10 @@ export const Signup = ({isAuth, setIsAuth}) => {
       setError(error.message)
     }
   }
+
+  useEffect(() => {
+    if(isAuth) navigate("/")
+  },[isAuth])
 
 
   return (

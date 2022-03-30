@@ -1,0 +1,57 @@
+.Nav_Wrapper {
+    padding: 1rem;
+    background-color: var(--secundary-color);
+    box-shadow: var(--shadow1);
+}
+
+.Header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+}
+
+.Header h1 {
+    font-weight: 300;
+}
+
+
+.Nav {
+    height: 5rem;
+    color: var(--primary-color);
+}
+
+.active {
+    color: var(--bg-color);
+}
+
+.Nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.Nav li {
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.Nav li img {
+    width: 3.5rem;
+}
+
+
+
+@media (min-width: 760px) {
+    .Nav_Wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 9rem;
+    }
+
+    .Nav ul {
+        width: 32rem;
+    }
+}

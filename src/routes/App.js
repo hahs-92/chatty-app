@@ -3,14 +3,11 @@ import { useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
-  Route,
-  Navigate
+  Route
 } from 'react-router-dom'
 import { onAuthStateChanged} from 'firebase/auth'
 //firebase config
 import { auth } from '../services/firebase'
-//styles
-import '../App.css';
 //pages
 import { Home } from '../pages/Home'
 import { Chat } from '../pages/Chat'
@@ -42,7 +39,7 @@ function App() {
       <Nav />
       <Routes>
       <Route path="/login" element={<Login isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
-      <Route path="/signUp" element={<Signup  setIsAuth={setIsAuth} />}/>
+      <Route path="/signUp" element={<Signup isAuth={isAuth}  setIsAuth={setIsAuth} />}/>
       <Route element={ <PrivateRoutes isAuth={isAuth} />}>
         <Route path="/" element={ <Home />}/>
         <Route path="/chat" element={ <Chat />}/>
