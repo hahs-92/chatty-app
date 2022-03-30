@@ -1,11 +1,11 @@
-.Login {
+.Signup {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 12rem);
 }
 
-.Login_Wrapper {
+.Signup_Wrapper {
     padding: 2rem 1.2rem;
     width: 100%;
     max-width: 35rem;
@@ -75,13 +75,12 @@
     color: var(--bg-color);
 }
 
-.Login_Wrapper hr {
+.Signup_Wrapper hr {
     margin: 1.5rem 0;
 }
 
-.SignupOption {
+.Login_Option {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
