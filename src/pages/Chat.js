@@ -31,8 +31,13 @@ export const Chat = () => {
     setContent(e.target.value)
   }
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if(!content) {
+      return
+    }
     setWriteError(null)
 
     try {
@@ -52,7 +57,6 @@ export const Chat = () => {
     getChats()
   },[])
 
-  console.log("chats: ", Object.values(chats))
 
   return (
     <main>
@@ -74,6 +78,8 @@ export const Chat = () => {
       </section>
 
       <section>
+        { readError && <span>{readError.message}</span>}
+        { !readError && !chats && <span>Write your first chat!</span>}
         {
           chats && Object.values(chats).map(chat => (
             <p key={chat.timestamp}>

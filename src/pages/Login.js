@@ -8,16 +8,23 @@ export const Login = ({isAuth, setIsAuth}) => {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
   const [ error, setError ] = useState(null)
+  const [ warn, setWarn ] = useState(null)
   const navigate = useNavigate()
 
 
   const handleOnSubmit = async(e) => {
     e.preventDefault()
+
+    if(password.length < 6) {
+      setWarn("password must have at least 6 characters")
+      return false
+    }
     setError(null)
+    setWarn(null)
 
     try {
       const userCredential =  await signin(email, password)
-      console.log(userCredential.user)
+      //console.log(userCredential.user)
     } catch (error) {
       setError(error.message)
     }
@@ -28,19 +35,11 @@ export const Login = ({isAuth, setIsAuth}) => {
       const result = await signInWithGoogle()
       const credential = GoogleAuthProvider.credentialFromResult(result)
       //const token = credential.accessToken
-      console.log(result.user)
 
       //lo redirigido maunalmete
       setIsAuth(true)
 
     } catch (error) {
-          // Handle Errors here.
-          // const errorCode = error.code;
-          // const errorMessage = error.message;
-          // // The email of the user's account used.
-          // const email = error.email;
-          // // The AuthCredential type that was used.
-          // const credential = GoogleAuthProvider.credentialFromError(error);
           setError(error.message)
     }
   }
@@ -96,6 +95,7 @@ export const Login = ({isAuth, setIsAuth}) => {
         <div>
           {error && <p>{error}</p>}
           <input type="submit" value="Sing In"/>
+          { warn && <span>{warn}</span>}
 
           <p>Or</p>
           <button onClick={googleSignIn} type="button">
